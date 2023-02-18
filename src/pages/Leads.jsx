@@ -8,8 +8,9 @@ const Leads = () => {
     const [statusData, setStatusData] = useState([]);
     const [sourceData, setSourceData] = useState([]);
     const [assigneeData, setAssigneeData] = useState([]);
+    const [isLoaded, setIsLoaded] = useState(false);
 
-    const fetchData = async (page) =>{
+    const fetchData = (page) =>{
         fetchLeads()
         .then((res) => {
             if(res.code === 200){
@@ -37,6 +38,8 @@ const Leads = () => {
                 setAssigneeData(res.data)
             }
         }).catch((err) => err);
+
+        setIsLoaded(true);
     }
 
     useEffect(()=>{
@@ -45,6 +48,7 @@ const Leads = () => {
 
     return (
         <>
+        {isLoaded ? <>
             <div className="leads">
                 <div className="container">
                     <div className="filter-toolbar">
@@ -123,6 +127,9 @@ const Leads = () => {
                     </div>
                 </div>
             </div>
+            </>:<>
+                <h1>Loading...</h1>
+            </>}
         </>
     )
 }
